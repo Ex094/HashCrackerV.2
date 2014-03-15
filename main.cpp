@@ -181,7 +181,7 @@ void verifyHash(std::string hash) {
 
 		hload = "Unloaded";
 
-		std::cout << "Your cracked has is: " << hashbase[hash] << std::endl;
+		std::cout << "Your cracked hash is: " << hashbase[hash] << std::endl;
 
 	} else {
 
