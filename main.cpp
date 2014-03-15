@@ -43,7 +43,9 @@ void pause();
 
 void menu () {
 
-     std::cout << "  \n";
+    std::cout << "                          HACKCOMMUNITY OFFICIAL TOOL " << std::endl;
+
+    std::cout << "  \n";
 
     std::cout << "                      Welcome to T0rn - Hash Cracking Tool \n";
 
