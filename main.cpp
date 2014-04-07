@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "/Programming and dev/HC/md5.h"
+#include "md5.h"
 #include <map>
 #include <limits>
 
@@ -161,35 +161,38 @@ bool check_dict(char filename[35]) {
 //cracked and present inside the db
 void verifyHash(std::string hash) {
 
-    int count = count_file("hashes.txt");
+    int count = count_file("pass.txt");
 
 	std::map <std::string, std::string> hashbase;
 
-	std::ifstream uhash ("hashes.txt");
 	std::ifstream upass ("pass.txt");
 
-	char haload[25];
-	char pload[25];
+	char pload[35];
+
+	MD5 md5;
+
+	char y[32];
+
+	bool con;
 
 	for(int i = 0; i < count; i++) {
 
-		uhash >> haload;
 		upass >> pload;
 
-		hashbase[haload] = pload;
+		if(md5.digestString(pload) == hash) {
+
+                hload = "Unloaded";
+                std::cout << "Your cracked hash is: " << pload << std::endl;
+                break;
+		}
+
+		con = false; //Condition  to check if matching fails
 	}
 
-	if(hashbase.count(hash)){
+	if(!con) {
 
-		hload = "Unloaded";
-
-		std::cout << "Your cracked hash is: " << hashbase[hash] << std::endl;
-
-	} else {
-
-		chash = hash;
+        chash = hash;
 	}
-
 }
 
 
@@ -213,15 +216,12 @@ void get_hash(std::string cHash) {
 
 
 //Adds the cracked hash to the db list
-void addToRecord(std::string cHash, std::string cPass) {
+void addToRecord(std::string cPass) {
 
-    std::ofstream hashf;
     std::ofstream ansf;
 
-    hashf.open("hashes.txt", std::ios::app); //Create file if not found
     ansf.open("pass.txt", std::ios::app); //Create file if not found
 
-    hashf << cHash << std::endl; //Write the hash at the eof
     ansf << cPass << std::endl; //Write the password at the eof
 
 }
@@ -263,7 +263,7 @@ void crack_hash(std::string hash) {
 
                                     std::cout << "Words handled: " << words << std::endl;
 
-                                    addToRecord(hash, test);
+                                    addToRecord(test);
 
                                     break;
 
